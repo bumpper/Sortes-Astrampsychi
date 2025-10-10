@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schema.tauri.app/config/2.0",
+  "productName": "Sortes-Astrampsychi",
+  "version": "1.0.0",
+  "identifier": "center.radius.sortesastrampsychi",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "devUrl": "../src",
+    "frontendDist": "../src"
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["msi", "nsis", "deb", "rpm", "dmg", "app"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "",
+      "wix": {
+        "language": "en-US"
+      },
+      "nsis": {
+        "installerIcon": "icons/icon.ico",
+        "installMode": "perUser",
+        "languages": ["en-US"],
+        "displayLanguageSelector": false
+      }
+    },
+    "macOS": {
+      "frameworks": [],
+      "minimumSystemVersion": "10.13",
+      "exceptionDomain": "",
+      "signingIdentity": null,
+      "providerShortName": null,
+      "entitlements": null
+    },
+    "linux": {
+      "deb": {
+        "depends": []
+      },
+      "rpm": {
+        "depends": []
+      }
+    },
+    "resources": [],
+    "externalBin": [],
+    "copyright": "Copyright © 2025 Radius.Center",
+    "category": "Utility",
+    "shortDescription": "Ancient Greek Oracle Divination Tool",
+    "longDescription": "Consult the ancient Sortes Astrampsychi oracle for divine guidance. This classical Greek divination system features over 100 traditional questions and mystical answers, providing spiritual guidance through an authentic ancient oracle experience with dark mode support."
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Sortes Astrampsychi",
+        "width": 1000,
+        "height": 800,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true,
+        "minWidth": 600,
+        "minHeight": 500
+      }
+    ],
+    "security": {
+      "csp": null,
+      "assetProtocol": {
+        "enable": true,
+        "scope": ["**"]
+      }
+    }
+  }
+}

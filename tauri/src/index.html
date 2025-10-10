@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Sortes Astrampsychi - Ancient Greek Oracle Divination Tool</title>
+    
+    <!-- Enhanced Meta Tags -->
+    <meta name="Rating" content="general" />
+    <meta name="DESCRIPTION" content="Consult the ancient Sortes Astrampsychi oracle for divine guidance. Ask your question and receive wisdom from this classical Greek divination system with over 100 traditional questions and mystical answers." />
+    <meta name="KEYWORDS" content="Sortes Astrampsychi, ancient Greek oracle, divination, fortune telling, classical oracle, Greek divination, ancient wisdom, mystical answers, oracle reading, spiritual guidance" />
+    <meta name="author" content="Radius.Center" />
+    <meta name="distribution" content="Global" />
+    <meta name="robots" content="FOLLOW,INDEX" />
+    
+    <link rel="SHORTCUT ICON" href="favicon.ico" />
+	<style>
+	    body {
+	        transition: background-color 0.3s, color 0.3s;
+	        margin: 0;
+	        padding: 0;
+	        min-height: 100vh;
+	        display: flex;
+	        flex-direction: column;
+	    }
+	    .hidden-title {
+		    display: none;
+		}
+		#questionForm {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding-top: 30px;
+			padding-bottom: 20px;
+		}
+		
+		#questionInput {
+			height: 30px;
+			font-size: 16px;
+			padding: 5px;
+			margin-bottom: 20px;
+		}
+		
+		#tossButton {
+			height: 40px;
+			font-size: 18px;
+			padding: 5px;
+			margin-bottom: 20px;
+		}
+		
+		#answerAontainer {
+			margin-bottom: 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		#resetButton {
+			height: 30px;
+			font-size: 16px;
+			padding: 5px;
+		}
+		
+		#results-wrapper {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+		}
+		
+		#result, #randomText {
+			margin: 10px 0;
+		}
+		
+		.question-display {
+			text-align: center;
+			font-style: italic;
+			color: #888;
+			margin-bottom: 20px;
+			font-size: 18px;
+		}
+		
+		.parchment-container {
+			position: relative;
+			background-image: url('parchment.png');
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			background-position: center;
+			height: 250px;
+			width: 600px;
+			max-width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 40px 30px;
+			margin: 0 auto;
+			box-sizing: border-box;
+		}
+		
+		.answer-content {
+			text-align: center;
+			color: #2c1810;
+			z-index: 1;
+			max-width: 90%;
+		}
+		
+		.answer-content p {
+			line-height: 1.6;
+			font-size: 16px;
+			margin: 0;
+		}
+		
+		.dark-mode .question-display {
+			color: #aaa;
+		}
+		
+        .toggle-switch {
+            position: absolute;
+            top: 20px;
+            right: 70px;
+        }
+        .toggle-switch input {
+            display: none;
+        }
+        .toggle-switch label {
+            cursor: pointer;
+            width: 50px;
+            height: 25px;
+            background: #ccc;
+            display: block;
+            border-radius: 25px;
+            position: relative;
+        }
+        .toggle-switch label:after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 21px;
+            height: 21px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch input:checked + label {
+            background: #5555ff;
+        }
+        .toggle-switch input:checked + label:after {
+            left: calc(100% - 2px);
+            transform: translateX(-100%);
+        }
+        .help-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            height: 30px;
+            font-size: 16px;
+            padding: 5px;
+            background-color: buttonface;
+            border: 1px solid;
+            border-color: buttonborder;
+            border-radius: 2px;
+            cursor: pointer;
+            text-decoration: none;
+            color: buttontext;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+        .help-btn:hover {
+            filter: brightness(0.95);
+        }
+        .dark-mode .help-btn {
+            background-color: #444;
+            color: white;
+            border: 1px solid #555;
+        }
+        .dark-mode .help-btn:hover {
+            filter: brightness(1.1);
+        }
+        .dark-mode {
+            background-color: #333;
+            color: white;
+        }
+        .dark-mode select,
+        .dark-mode button,
+        .dark-mode input[type="submit"] {
+            background-color: #444;
+            color: white;
+            border-color: #555;
+        }
+	</style>
+</head>
+<body>
+    <div class="toggle-switch">
+        <input type="checkbox" id="dark-mode-toggle">
+        <label for="dark-mode-toggle"></label>
+    </div>
+    <a href="help.html" class="help-btn" title="Help Documentation" aria-label="Help Documentation">?</a>
+<div class="hidden-title"><center><h1>Sortes Astrampsychi</h1></center></p></div>
+    <form id="questionForm">
+        <select id="questionSelect" name="question" autofocus>
+			<option value="">Select your question...</option>
+			<option value="#12, Will I sail safely?  ">12. Will I sail safely?  </option>
+			<option value="#13, Is it a good time to consult the oracle?  ">13. Is it a good time to consult the oracle?  </option>
+			<option value="#14, Will I serve in the army?  ">14. Will I serve in the army?  </option>
+			<option value="#15, Will I have a share in the business?  ">15. Will I have a share in the business?  </option>
+			<option value="#16, Will I advance in office?  ">16. Will I advance in office?  </option>
+			<option value="#17, Will I go out of town?  ">17. Will I go out of town?  </option>
+			<option value="#18, Is it to my advantage to enter into an agreement?  ">18. Is it to my advantage to enter into an agreement?  </option>
+			<option value="#19, Will I be successful?  ">19. Will I be successful?  </option>
+			<option value="#20, Will I purchase what is offered?  ">20. Will I purchase what is offered?  </option>
+			<option value="#21, Will I marry and will it be to my advantage?  ">21. Will I marry and will it be to my advantage?  </option>
+			<option value="#22, Can I be harmed in the business affair?  ">22. Can I be harmed in the business affair?  </option>
+			<option value="#23, Will I move from this place?  ">23. Will I move from this place?  </option>
+			<option value="#24, Is my wife having a baby?  ">24. Is my wife having a baby?  </option>
+			<option value="#25, Will I be able to borrow money?  ">25. Will I be able to borrow money?  </option>
+			<option value="#26, Will I pay back what I owe?  ">26. Will I pay back what I owe?  </option>
+			<option value="#27, Will the traveler return?  ">27. Will the traveler return?  </option>
+			<option value="#28, Will I soon give an accounting?  ">28. Will I soon give an accounting?  </option>
+			<option value="#29, Am I safe from prosecution?  ">29. Am I safe from prosecution?  </option>
+			<option value="#30, Will I rear the baby?  ">30. Will I rear the baby?  </option>
+			<option value="#31, Will I be harmed in the business affair?  ">31. Will I be harmed in the business affair?  </option>
+			<option value="#32, Will I be freed from servitude?  ">32. Will I be freed from servitude?  </option>
+			<option value="#33, Will I inherit it from my father?  ">33. Will I inherit it from my father?  </option>
+			<option value="#34, Will I inherit it from my mother?  ">34. Will I inherit it from my mother?  </option>
+			<option value="#35, Will I be an official in this matter?  ">35. Will I be an official in this matter?  </option>
+			<option value="#36, Will I find the fugitive?  ">36. Will I find the fugitive?  </option>
+			<option value="#37, Will I have a good ending?  ">37. Will I have a good ending?  </option>
+			<option value="#38, Will I inherit it from a friend?  ">38. Will I inherit it from a friend?  </option>
+			<option value="#39, Will I be an agoranomos?  ">39. Will I be an agoranomos?  </option>
+			<option value="#40, Will I find what I have lost?  ">40. Will I find what I have lost?  </option>
+			<option value="#41, Will I be a teacher?  ">41. Will I be a teacher?  </option>
+			<option value="#42, Will I survive the sickness?  ">42. Will I survive the sickness?  </option>
+			<option value="#43, Will I open a workshop?  ">43. Will I open a workshop?  </option>
+			<option value="#44, Will I have a long life?  ">44. Will I have a long life?  </option>
+			<option value="#45, Will I obtain the petition?  ">45. Will I obtain the petition?  </option>
+			<option value="#46, Will I come to terms with my masters?  ">46. Will I come to terms with my masters?  </option>
+			<option value="#47, Will I beget children?  ">47. Will I beget children?  </option>
+			<option value="#48, Will I inherit it from my parents?  ">48. Will I inherit it from my parents?  </option>
+			<option value="#49, Will I get the dowry?  ">49. Will I get the dowry?  </option>
+			<option value="#50, Will I retain possession of my property?  ">50. Will I retain possession of my property?  </option>
+			<option value="#51, Will I argue my case?  ">51. Will I argue my case?  </option>
+			<option value="#52, Will I inherit it from my wife?  ">52. Will I inherit it from my wife?  </option>
+			<option value="#53, Will I be safe if informed against?  ">53. Will I be safe if informed against?  </option>
+			<option value="#54, Will the one who is sick survive?  ">54. Will the one who is sick survive?  </option>
+			<option value="#55, Will I get the woman I desire?  ">55. Will I get the woman I desire?  </option>
+			<option value="#56, Will I be released from detention?  ">56. Will I be released from detention?  </option>
+			<option value="#57, Will I sell my cargo?  ">57. Will I sell my cargo?  </option>
+			<option value="#58, If I lend money, will I not lose it?  ">58. If I lend money, will I not lose it?  </option>
+			<option value="#59, Is my wife going to miscarry?  ">59. Is my wife going to miscarry?  </option>
+			<option value="#60, Will I be an oikonomos (manager)?  ">60. Will I be an oikonomos (manager)?  </option>
+			<option value="#61, Will I take a lease, and will it benefit me?  ">61. Will I take a lease, and will it benefit me?  </option>
+			<option value="#62, Will I have an inheritance from someone?  ">62. Will I have an inheritance from someone?  </option>
+			<option value="#63, Will I defeat my opponent in the trial?  ">63. Will I defeat my opponent in the trial?  </option>
+			<option value="#64, Am I going to see a death?  ">64. Am I going to see a death?  </option>
+			<option value="#65, Will I be a general?  ">65. Will I be a general?  </option>
+			<option value="#66, Will I be made a cleric?  ">66. Will I be made a cleric?  </option>
+			<option value="#67, Will I get the call to an office?  ">67. Will I get the call to an office?  </option>
+			<option value="#68, Will I have hope of trust?  ">68. Will I have hope of trust?  </option>
+			<option value="#69, Will I win if I put down a deposit for an appeal?  ">69. Will I win if I put down a deposit for an appeal?  </option>
+			<option value="#70, Am I going to marry my girlfriend?  ">70. Am I going to marry my girlfriend?  </option>
+			<option value="#71, Will I get my deposit back?  ">71. Will I get my deposit back?  </option>
+			<option value="#72, Will I get provisions?  ">72. Will I get provisions?  </option>
+			<option value="#73, Will I remain where I am going?  ">73. Will I remain where I am going?  </option>
+			<option value="#74, Am I going to be sold?  ">74. Am I going to be sold?  </option>
+			<option value="#75, Will I get some benefit from my friend?  ">75. Will I get some benefit from my friend?  </option>
+			<option value="#76, Is it granted to me to have dealings with another?  ">76. Is it granted to me to have dealings with another?  </option>
+			<option value="#77, Will I be restored to my place?  ">77. Will I be restored to my place?  </option>
+			<option value="#78, Will I get an escort?  ">78. Will I get an escort?  </option>
+			<option value="#79, Will I get the money?  ">79. Will I get the money?  </option>
+			<option value="#80, Is the traveler alive?  ">80. Is the traveler alive?  </option>
+			<option value="#81, Will I profit from the undertaking?  ">81. Will I profit from the undertaking?  </option>
+			<option value="#82, Are my belongings going to be sold at auction?  ">82. Are my belongings going to be sold at auction?  </option>
+			<option value="#83, Will I find a way to sell it?  ">83. Will I find a way to sell it?  </option>
+			<option value="#84, Will I buy the thing I have in mind?  ">84. Will I buy the thing I have in mind?  </option>
+			<option value="#85, Will I be prosperous?  ">85. Will I be prosperous?  </option>
+			<option value="#86, Will I be banished?  ">86. Will I be banished?  </option>
+			<option value="#87, Will I be an ambassador?  ">87. Will I be an ambassador?  </option>
+			<option value="#88, Will I be a senator?  ">88. Will I be a senator?  </option>
+			<option value="#89, Will the fugitive escape my detection?  ">89. Will the fugitive escape my detection?  </option>
+			<option value="#90, Will I be estranged from my wife?  ">90. Will I be estranged from my wife?  </option>
+			<option value="#91, Have I been poisoned?  ">91. Have I been poisoned?  </option>
+			<option value="#92, Will I get a bequest?  ">92. Will I get a bequest?  </option>
+			<option value="#93, Will I finish what I undertake?  ">93. Will I finish what I undertake?  </option>
+			<option value="#94, Will I be able to see my homeland?  ">94. Will I be able to see my homeland?  </option>
+			<option value="#95, Will I become a decemvir?  ">95. Will I become a decemvir?  </option>3
+			<option value="#96, Will I get free from my lot?  ">96. Will I get free from my lot?  </option>
+			<option value="#97, Will my wife stay with me?  ">97. Will my wife stay with me?  </option>
+			<option value="#98, Will I remain an elder?  ">98. Will I remain an elder?  </option>
+			<option value="#99, Will I buy land or a house?  ">99. Will I buy land or a house?  </option>
+			<option value="#100, Will I be caught as an adulterer presently?  ">100. Will I be caught as an adulterer presently?  </option>
+			<option value="#101, Will I become a bishop?  ">101. Will I become a bishop?  </option>
+			<option value="#102, Will I be estranged from my girlfriend?  ">102. Will I be estranged from my girlfriend?  </option>
+			<option value="#103, Will the one who is detained be set free?  ">103. Will the one who is detained be set free?  </option>
+      </select></p>
+      <input type="submit" value="Answer" id="tossButton" >
+        <div id="answer-container"></div>
+        <button type="reset" id="resetButton" onclick="location.reload()">Reset</button></p></p></p>
+    </form>
+
+    <div id="results-wrapper">
+        <div id="result" align="center"></div>
+        <div id="randomText" align="center"></div>
+    </div>
+    <script>
+      // Array of random text strings
+      const randomTexts = [
+		'You will not have hope of trust.  ',
+		'You will not get the call to an office just now.  ',
+		'You will be made a cleric, but later.  ',
+		'You will be a general, you will thrive, and you will be distinguished.  ',
+		'You are going to see a death and to rejoice presently.  ',
+		'You will have satisfaction.   You will win.   Do battle.  ',
+		'You will have an inheritance with another trial.  ',
+		'If you take a lease, you will suffer a great loss.  ',
+		'You will be an oikonomos (manager) and you will be envied by someone.  ',
+		'She will miscarry with peril, but she will be safe.  ',
+		'Unable to tell at this time.  ',
+      ];
+
+      // Function to handle form submission
+      const handleFormSubmit = (event) => {
+        event.preventDefault(); // Prevent page reload
+
+        // Get selected option value
+        const selectedOption = document.getElementById('questionSelect').value;
+
+        // Get random answer
+        const randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+
+        // Display question and answer with parchment background
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `
+          <div class="question-display">You asked: ${selectedOption}</div>
+          <div class="parchment-container">
+            <div class="answer-content">
+              <p>${randomText}</p>
+            </div>
+          </div>
+        `;
+
+        // Clear the randomText div since we're now using the combined display
+        document.getElementById('randomText').innerHTML = '';
+
+        // Reset dropdown to default option
+        document.getElementById('questionSelect').value = '';
+      };
+
+      // Add event listener to form
+      const questionForm = document.getElementById('questionForm');
+      questionForm.addEventListener('submit', handleFormSubmit);
+      
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+      darkModeToggle.addEventListener('change', () => {
+          document.body.classList.toggle('dark-mode');
+          localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+      });
+      
+      // Apply saved dark mode preference on page load
+      if (localStorage.getItem('darkMode') === 'true') {
+          document.body.classList.add('dark-mode');
+          darkModeToggle.checked = true;
+      }
+    </script>
+  </body>
+</html>
